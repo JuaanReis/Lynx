@@ -1,45 +1,41 @@
-
 # LYNX - Web Security Suite 2025
 
-O LYNX é uma ferramenta de varredura e exploração web desenvolvida para pesquisadores de segurança, entusiastas de cibersegurança e profissionais da área. Seu objetivo principal é fornecer uma solução simples, eficiente e acessível para a detecção e exploração de vulnerabilidades comuns em aplicações web. 
+**LYNX** é uma ferramenta de varredura e exploração de vulnerabilidades web feita para quem precisa de algo leve, rápido e funcional.
+Voltada para entusiastas, estudantes e profissionais de segurança, ela foca no essencial: encontrar falhas comuns como XSS, caminhos expostos e senhas fracas — sem depender de soluções pesadas ou complicadas.
 
-## História
+## Por que esse projeto existe?
 
-O projeto LYNX surgiu com a necessidade de ferramentas práticas e rápidas para testes de segurança em sites, especialmente em áreas como Cross-Site Scripting (XSS), força bruta e varredura de caminhos e diretórios. A ideia é criar uma plataforma que permita que os profissionais da área de segurança da informação conduzam seus testes de forma eficiente, sem complicação e com feedback visual claro.
+A ideia do LYNX surgiu da necessidade de ferramentas que fossem diretas ao ponto. A maioria dos scanners ou são lentos, ou exigem configuração demais. O LYNX tenta resolver isso oferecendo um conjunto de utilitários simples, com foco em velocidade, clareza e controle manual.
 
-Embora o foco inicial tenha sido em ferramentas de exploração específicas, como o scanner de XSS e brute force, a visão do projeto é evoluir para uma plataforma modular que seja facilmente adaptável a novos métodos de ataque e novas ameaças.
+O projeto começou com funções básicas de XSS e brute force, mas é planejado para ser modular, permitindo a adição de novos modos de ataque com o tempo.
 
-## Por que o LYNX Funciona?
+## O que ele faz (por enquanto)?
 
-O LYNX utiliza uma combinação de técnicas eficientes para realizar varreduras em websites e detectar vulnerabilidades. A ferramenta é projetada para ser de fácil uso, com um menu interativo e resultados rápidos.
+- **XSS Scanner**
+  Detecta e testa possíveis pontos vulneráveis a Cross-Site Scripting (refletido e armazenado).
 
-### Ferramentas Disponíveis no LYNX:
+- **Path Scanner**
+  Faz varredura de diretórios e arquivos comuns expostos no servidor.
 
-1. **Scanner de XSS (Cross-Site Scripting)**:
-   - Detecta e explora vulnerabilidades XSS, permitindo a injeção de código malicioso em páginas da web.
+- **Brute Force**
+  Testa credenciais em formulários de login simples usando listas de usuário/senha.
 
-2. **Scanner de Caminhos (Path Scanner)**:
-   - Realiza uma varredura em busca de caminhos vulneráveis em servidores web, identificando diretórios e arquivos sensíveis.
+Essas funções são implementadas com base em técnicas clássicas usadas em testes manuais e automatizados, voltadas para aprendizado, labs e análises rápidas.
 
-3. **Força Bruta (Brute Force)**:
-   - Ataca sistemas de autenticação tentando várias combinações de nome de usuário e senha.
+## Características
 
-Essas ferramentas são baseadas em técnicas amplamente reconhecidas e usadas por profissionais da área de cibersegurança, com foco na detecção rápida e exploração das vulnerabilidades.
+- **Menu interativo e feedback visual com progresso**
+- **Código modular, fácil de modificar e expandir**
+- **Escrito em Python com integração parcial em C para ganho de desempenho**
 
-## Características e Diferenciais
+## Importante
 
-- **Simplicidade de uso**: O LYNX oferece um menu interativo simples e direto, com feedback visual claro e progressos.
-- **Desempenho**: A ferramenta foi projetada para ser rápida e eficiente, utilizando bibliotecas modernas como `colorama`, `tqdm`, e outras para fornecer uma experiência fluida.
-- **Modularidade**: A arquitetura do LYNX permite que mais ferramentas e módulos sejam adicionados facilmente ao sistema no futuro.
+O LYNX é um projeto **não oficial**, feito para **fins educacionais e testes autorizados**.
+Não use em sistemas que você não tem permissão para testar.
 
-## Aviso Legal
+**O autor não se responsabiliza por qualquer uso indevido.**
 
-O uso do LYNX é **estritamente restrito a ambientes de testes autorizados e controlados**. O autor da ferramenta **não se responsabiliza por qualquer uso indevido** ou atividades ilegais realizadas com a ferramenta. A utilização do LYNX em sistemas ou sites sem a devida autorização pode ser considerada ilegal, sujeitando o usuário a penalidades.
+## Em resumo
 
-**Atenção**: O LYNX foi desenvolvido para **fins educacionais e testes de segurança em ambientes controlados**. Utilize a ferramenta com responsabilidade e siga as práticas éticas da segurança da informação.
-
-## Conclusão
-
-O LYNX visa empoderar profissionais de segurança para realizar testes de forma mais eficiente e sem complicações, com foco em resultados rápidos e precisos. A ferramenta é desenvolvida com o intuito de ser acessível, mas ao mesmo tempo poderosa, com a capacidade de ser expandida conforme novas ameaças surgem.
-
-**Fique atento**: Novas versões e funcionalidades estão planejadas para aprimorar ainda mais o LYNX, tornando-o uma plataforma robusta para testes de segurança web.
+O LYNX não é o scanner mais bonito ou mais completo do mundo.
+Mas é pequeno, rápido, funcional — e está evoluindo.

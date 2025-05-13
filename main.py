@@ -36,7 +36,7 @@ def exibe_banner():
     if LEGAL_USE_ONLY:
         print(f"{Fore.RED}{ALERT_MESSAGE}{Style.RESET_ALL}")
 
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Ferramenta profissional de varredura e exploração web para pesquisadores de segurança.")
+    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Ferramenta de testes para varredura e exploração web para pesquisadores de segurança.")
     print(f"{Fore.YELLOW}[!]" + f"{Fore.WHITE} USO RESPONSÁVEL OBRIGATÓRIO!")
     print(f"{Fore.RED} [!]" + f"{Fore.WHITE} Essa ferramenta é destinada apenas para testes autorizados e ambientes controlados.")
     print(f"{Fore.RED} [!]" + f"{Fore.WHITE} O autor não se responsabiliza por qualquer uso indevido desta aplicação.\n")
