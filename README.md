@@ -28,14 +28,23 @@ Essas funções são implementadas com base em técnicas clássicas usadas em te
 - **Código modular, fácil de modificar e expandir**
 - **Escrito em Python com integração parcial em C para ganho de desempenho**
 
-## Importante
+## 🤝 Quer ajudar?
+
+Esse projeto ainda tá só começando e **toda ajuda é bem-vinda**.
+Se você manja de Python, C, segurança web, design de interface ou só quer contribuir com ideias, **chega junto!**
+
+Pode abrir issues, mandar sugestões, corrigir bugs ou criar novos módulos.
+Tem um manual explicando como usar a ferramenta em [manual.md](docs/manual.md) — dá uma olhada lá antes de começar.
+
+Bora fazer o LYNX crescer juntos!
+
+## ⚠️ Importante
 
 O LYNX é um projeto **não oficial**, feito para **fins educacionais e testes autorizados**.
-Não use em sistemas que você não tem permissão para testar.
+**Não use em sistemas que você não tem permissão para testar.**
+O autor **não se responsabiliza por qualquer uso indevido.**
 
-**O autor não se responsabiliza por qualquer uso indevido.**
+## 📥 Clonar este repositório
 
-## Em resumo
-
-O LYNX não é o scanner mais bonito ou mais completo do mundo.
-Mas é pequeno, rápido, funcional — e está evoluindo.
+```bash
+git clone https://github.com/JuaanReis/Lynx.git
