@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd /home/juan/Documentos/Projeto/LYNX
-
 if [ ! -d venv ]; then
   echo "[-] Ambiente venv não criado"
   python3 -m venv venv
