@@ -1,14 +1,13 @@
-# main.py
 import shlex
 from colorama import Fore, Style, init
-from src.scanners import xss, path, brute
+from src.scanners import smap, xss, path, brute
 import time
 import random
 import socket
-import os
+import platform
 from tqdm import tqdm
 from src.core.check_memory import check_memory_limit
-from settings import DEBUG, OPERATION_MODE, LEGAL_USE_ONLY, ALERT_MESSAGE
+from settings import OPERATION_MODE, LEGAL_USE_ONLY, ALERT_MESSAGE
 
 # Inicializa colorama no Windows
 init(autoreset=True)
@@ -17,7 +16,7 @@ MEMORY_LIMIT = 500  # Limite de 500MB
 
 def exibe_banner():
     print(f"{Fore.GREEN}{Style.BRIGHT}")
-    print(r"""
+    print(f"{Fore.RED}" + r"""
      ██▓   ▓██   ██▓ ███▄    █ ▒██   ██▒
     ▓██▒    ▒██  ██▒ ██ ▀█   █ ▒▒ █ █ ▒░
     ▒██░     ▒██ ██░▓██  ▀█ ██▒░░  █ █ ▒
@@ -45,15 +44,19 @@ def exibe_banner():
 
 def menu_principal():
     print(f"{Fore.CYAN} [*]" + f"{Fore.WHITE} Selecione uma das ferramentas disponíveis:\n")
-    print(f"{Fore.YELLOW}[1]" + f"{Fore.WHITE} Scanner de XSS")
-    print(f"{Fore.YELLOW}[2]" + f"{Fore.WHITE} Scanner de Caminhos")
-    print(f"{Fore.YELLOW}[3]" + f"{Fore.WHITE} Ataques de Força Bruta")
+    print(f"{Fore.BLUE}[1]" + f"{Fore.WHITE} Scanner de XSS")
+    print(f"{Fore.BLUE}[2]" + f"{Fore.WHITE} Scanner de Caminhos")
+    print(f"{Fore.BLUE}[3]" + f"{Fore.WHITE} Ataques de Força Bruta")
+    print(f"{Fore.BLUE}[4]" + f"{Fore.WHITE} Scanner de SMAP (Sistema de Mapas de Arquivos)")
     print(f"{Fore.RED}[0]" + f"{Fore.WHITE} Sair\n")
 
 def system_info():
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Sistema Operacional: {os.name}")
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Hostname: {socket.gethostname()}")
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} IP Local: {socket.gethostbyname(socket.gethostname())}")
+    print(f"{Fore.CYAN}[*]{Fore.WHITE} Sistema Operacional: {platform.system()} {platform.release()}")
+    try:
+        ip = socket.gethostbyname(socket.gethostname())
+    except socket.gaierror:
+        ip = "IP não disponível"
+    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} IP Local: {ip}")
     print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Status: Online - Conectado à rede\n")
 
 def godmode():
@@ -116,6 +119,12 @@ def main():
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)
             brute.run(user_args)
+
+        elif escolha == "4":
+            print(f"{Fore.MAGENTA}[INFO]" + f"{Fore.WHITE} Informações sobre o site:")
+            user_input = input(f"{Fore.GREEN}> ")
+            user_args = shlex.split(user_input)
+            smap.run(user_args)
 
         elif escolha == "godmode":
             godmode()

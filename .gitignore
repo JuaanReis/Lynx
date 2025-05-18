@@ -1,3 +1,15 @@
+__pycache__/
+*.pyc
+.env
+*.sqlite3
+*.log
 venv/
+node_modules/
+*.so
+*.o
+*.exe
+*.out
+.DS_Store
+.idea/
+.vscode/
 .venv/
-__pycahe__/

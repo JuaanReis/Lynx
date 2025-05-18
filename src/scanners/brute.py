@@ -14,7 +14,7 @@ def run(user_args=None):
     parser.add_argument("-t", "--threads", type=int, default=10, help="Número de threads (padrão: 10)")
     args = parser.parse_args(user_args if user_args is not None else [])
 
-    binary = "./brute_bin"
+    binary = "src/scanners/brute_bin"
     if not os.path.isfile(binary):
         print(Fore.RED + "[ERRO] Binário brute_bin não encontrado! Compile o brute.c com: gcc brute.c -o brute_bin -pthread")
         return
