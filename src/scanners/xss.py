@@ -7,9 +7,12 @@ import re
 from tqdm import tqdm
 from colorama import Fore, init
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from src.utils.file_utils import load_payloads
+import logging
+from src.utils.file_utils import load_payloads, setup_logs
 
 init(autoreset=True)
+
+setup_logs()
 
 def get_args_from_list(arg_list):
     parser = argparse.ArgumentParser(description="Ferramenta de XSS")
@@ -154,6 +157,13 @@ def scan_reflect_xss(payloads, args):
     exibir_resultados(resultados)
 
 def main(args):
+    logging.info(f"Executando o scanner de XSS com os seguintes parâmetros: {args}")
+    logging.info(f"Payloads carregados: {args.payload}")
+    logging.info(f"Tipo de ataque: {args.type}")
+    logging.info(f"URL alvo: {args.url}")
+    logging.info(f"Limite de payloads: {args.l}")
+    logging.info(f"Threads: {args.t}")
+    
     all_payloads = load_payloads(args.payload)
     payloads = all_payloads[:args.l] if args.l else all_payloads
     print(f"{Fore.MAGENTA}[*]" + f"{Fore.WHITE} Total de payloads carregados: {len(payloads)}")

@@ -6,6 +6,10 @@ from bs4 import BeautifulSoup
 import ssl
 from datetime import datetime
 import socket
+import logging
+from src.utils.file_logs import setup_logs
+
+setup_logs()
 
 init(autoreset=True)
 
@@ -112,7 +116,7 @@ def get_params(url):
     if params:
       for nome in params:
         perigo = f"{Fore.RED}[PERIGOSO]" if nome.lower() in perigoso else ""
-        resultado.append(f"{url} -> {nome}: {params[nome]} {perigo}")
+        resultado.append(f"{url}" + f"{Fore.GREEN} ->   " + f"{nome}: {params[nome]} {perigo}")
   return resultado if resultado else ["Nenhum parametro encontrado."]
 
 #Detectar a tecnologia do site
@@ -255,8 +259,7 @@ def get_headers(url):
   try:
     response = requests.get(url, timeout=10)
     headers = response.headers
-    for k, v in headers.items():
-      return dict(headers)
+    return dict(headers)
   except requests.RequestException as e:
     print(f"{Fore.RED}[-]" + f"{Fore.WHITE} Erro ao coletar cabeçalhos: {e}")
     return {}
@@ -303,6 +306,33 @@ def main(url):
     cookies = get_cookies(url)
     external_links = get_external_links(url)
     internal_links = get_internal_links(url)
+
+    #Logs
+    print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} Logs sendo emitiados...")
+    logging.info(f"URL: {url}")
+    logging.info(f"Protocolo: {protocols}")
+    logging.info(f"Porta: {port}")
+    logging.info(f"Domínio: {domain}")
+    logging.info(f"SSL: {ssl_info['status']}")
+    logging.info(f"CORS: {cors_status}")
+    logging.info(f"Cookies: {cookies}")
+    logging.info(f"Formulários: {len(forms)} encontrados.")
+    for i, form in enumerate(forms):
+        logging.info(f"Formulário #{i+1}:")
+        logging.info(f"  Método: {form['method']}")
+        logging.info(f"  Action: {form['action']}")
+        for campo in form["inputs"]:
+            if campo["type"].lower() == "hidden":
+                logging.info(f"    [HIDDEN] Nome: {campo['name']} | Valor: {campo['value']}")
+            else:
+                logging.info(f"    Tipo: {campo['type']} | Nome: {campo['name']} | Valor: {campo['value']}")
+    logging.info(f"Links externos encontrados: {external_links}")
+    logging.info(f"Links internos encontrados: {internal_links}")
+    logging.info(f"Parâmetros encontrados na URL principal: {get_params([url])}")
+    logging.info(f"Parâmetros encontrados nos links internos: {get_params(internal_links)}")
+    logging.info(f"Parâmetros encontrados nos links externos: {get_params(external_links)}")
+    logging.info(f"Tecnologias detectadas: {tecnologias}")
+    logging.info(f"Verificação concluída com sucesso!")
 
     # Lista de cabeçalhos recomendados
     headers_recomendados = [
@@ -361,7 +391,7 @@ def main(url):
     for link in external_links:
       print(f"  {Fore.GREEN}->" + f"{Fore.WHITE} {link}")
     print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} Parametros encontrados na URL principal:")
-    for param in get_params(url):
+    for param in get_params([url]):
       print(f"  {Fore.GREEN} ->" + f"{Fore.WHITE} {param}")
     print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} Parametros encontrados nos links internos:")
     for param in get_params(internal_links):

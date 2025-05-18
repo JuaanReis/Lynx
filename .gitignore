@@ -3,7 +3,8 @@ __pycache__/
 .env
 *.sqlite3
 *.log
-venv/
+*.logs
+*venv/
 node_modules/
 *.so
 *.o
@@ -11,5 +12,6 @@ node_modules/
 *.out
 .DS_Store
 .idea/
-.vscode/
-.venv/
+*.vscode/
+*.venv/
+output/logs/
