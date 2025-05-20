@@ -1,6 +1,0 @@
-2025-05-19 00:31:54,123 - INFO - Executando o scanner de XSS com os seguintes parâmetros: Namespace(url='https://google-gruyere.appspot.com/559044525658533034225977935172387699739/snippets.gtl?uid=cheddar', type='refletido', payload='xss.txt', l=40, post=None, view=None, t=30)
-2025-05-19 00:31:54,123 - INFO - Payloads carregados: xss.txt
-2025-05-19 00:31:54,123 - INFO - Tipo de ataque: refletido
-2025-05-19 00:31:54,123 - INFO - URL alvo: https://google-gruyere.appspot.com/559044525658533034225977935172387699739/snippets.gtl?uid=cheddar
-2025-05-19 00:31:54,123 - INFO - Limite de payloads: 40
-2025-05-19 00:31:54,123 - INFO - Threads: 30
