@@ -1,18 +1,19 @@
 import shlex
 from colorama import Fore, Style, init
-from src.scanners import smap, xss, path, brute
 import time
 import random
 import socket
 import platform
 from tqdm import tqdm
 from src.core.check_memory import check_memory_limit
+from src.utils.ping import test_connection
 from settings import OPERATION_MODE, LEGAL_USE_ONLY, ALERT_MESSAGE
 
-# Inicializa colorama no Windows
 init(autoreset=True)
 
 MEMORY_LIMIT = 500  # Limite de 500MB
+
+conectado, ping = test_connection()
 
 def exibe_banner():
     print(f"{Fore.GREEN}{Style.BRIGHT}")
@@ -47,7 +48,7 @@ def menu_principal():
     print(f"{Fore.BLUE}[1]" + f"{Fore.WHITE} Scanner de XSS")
     print(f"{Fore.BLUE}[2]" + f"{Fore.WHITE} Scanner de Caminhos")
     print(f"{Fore.BLUE}[3]" + f"{Fore.WHITE} Ataques de Força Bruta")
-    print(f"{Fore.BLUE}[4]" + f"{Fore.WHITE} Scanner de SMAP (Sistema de Mapas de Arquivos)")
+    print(f"{Fore.BLUE}[4]" + f"{Fore.WHITE} Scanner de SMAP" + f"{Fore.CYAN} (Sistema de Mapas de Arquivos)")
     print(f"{Fore.RED}[0]" + f"{Fore.WHITE} Sair\n")
 
 def system_info():
@@ -57,7 +58,10 @@ def system_info():
     except socket.gaierror:
         ip = "IP não disponível"
     print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} IP Local: {ip}")
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Status: Online - Conectado à rede\n")
+    if conectado:
+        print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} Conectado à Internet com ping de {ping} ms")
+    else:
+        print(f"{Fore.RED}[-]" + f"{Fore.WHITE} Sem conexão com a Internet. Verifique sua rede.")
 
 def godmode():
     mensagens = [
@@ -103,24 +107,28 @@ def main():
         escolha = input(f"{Fore.GREEN}[!]" + f"{Fore.WHITE} Digite o número da opção desejada: ").strip()
 
         if escolha == "1":
+            from src.scanners import xss
             print(f"{Fore.MAGENTA}[MODO XSS]{Style.RESET_ALL} Insira os argumentos para execução do scanner de XSS:")
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)
             xss.run(user_args)
 
         elif escolha == "2":
+            from src.scanners import path
             print(f"{Fore.MAGENTA}[MODO PATH]{Style.RESET_ALL} Insira os argumentos para execução do scanner de diretórios:")
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)
             path.run(user_args)
 
         elif escolha == "3":
+            from src.scanners.bruteForce import brute
             print(f"{Fore.MAGENTA}[MODO BRUTE FORCE]{Style.RESET_ALL} Insira os argumentos para iniciar a força bruta:")
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)
             brute.run(user_args)
 
         elif escolha == "4":
+            from src.scanners import smap
             print(f"{Fore.MAGENTA}[INFO]" + f"{Fore.WHITE} Informações sobre o site:")
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)

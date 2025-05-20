@@ -1,0 +1,1 @@
+2025-05-20 00:49:52,881 - ERROR - Erro: bad operand type for unary +: 'str'

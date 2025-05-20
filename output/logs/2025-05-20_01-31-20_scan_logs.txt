@@ -1,0 +1,6 @@
+2025-05-20 01:31:42,086 - INFO - Executando o scanner de diretórios com os seguintes parâmetros: Namespace(url='https://google-gruyere.appspot.com/449289277172998157100941872980014920611/', w='path.txt', l=20, t=10, status=[200], d=(0, 0))
+2025-05-20 01:31:42,088 - INFO - URL alvo: https://google-gruyere.appspot.com/449289277172998157100941872980014920611/
+2025-05-20 01:31:42,089 - INFO - Wordlist: path.txt
+2025-05-20 01:31:42,090 - INFO - Total de paths: 20
+2025-05-20 01:31:42,090 - INFO - Threads: 10
+2025-05-20 01:31:42,091 - INFO - Status válidos: [200]

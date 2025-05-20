@@ -1,0 +1,15 @@
+2025-05-19 23:25:35,304 - INFO - URL: https://google-gruyere.appspot.com/449289277172998157100941872980014920611/
+2025-05-19 23:25:35,305 - INFO - Protocolo: [32m->[37m Protocolo: HTTPS[32m Seguro[37m(SSL)
+2025-05-19 23:25:35,305 - INFO - Porta: 443
+2025-05-19 23:25:35,305 - INFO - Domínio: [36mgoogle-gruyere.appspot.com
+2025-05-19 23:25:35,305 - INFO - SSL: valido
+2025-05-19 23:25:35,305 - INFO - CORS: [31m[-][37m CORS:[31m Não encontrado
+2025-05-19 23:25:35,305 - INFO - Cookies: ['\x1b[31m[-]\x1b[37m Nenhum cookie encontrado.']
+2025-05-19 23:25:35,305 - INFO - Formulários: 0 encontrados.
+2025-05-19 23:25:35,305 - INFO - Links externos encontrados: ['https://images.google.com/?q=cheddar+cheese', 'https://news.google.com/news/search?q=brie']
+2025-05-19 23:25:35,305 - INFO - Links internos encontrados: ['https://google-gruyere.appspot.com/449289277172998157100941872980014920611/', 'https://google-gruyere.appspot.com/449289277172998157100941872980014920611/login', 'https://google-gruyere.appspot.com/449289277172998157100941872980014920611/newaccount.gtl', 'https://google-gruyere.appspot.com/449289277172998157100941872980014920611/snippets.gtl?uid=cheddar', 'https://google-gruyere.appspot.com/449289277172998157100941872980014920611/snippets.gtl?uid=brie']
+2025-05-19 23:25:35,305 - INFO - Parâmetros encontrados na URL principal: ['Nenhum parametro encontrado.']
+2025-05-19 23:25:35,306 - INFO - Parâmetros encontrados nos links internos: ["https://google-gruyere.appspot.com/449289277172998157100941872980014920611/snippets.gtl?uid=cheddar\x1b[32m ->   uid: ['cheddar'] \x1b[31m[PERIGOSO]", "https://google-gruyere.appspot.com/449289277172998157100941872980014920611/snippets.gtl?uid=brie\x1b[32m ->   uid: ['brie'] \x1b[31m[PERIGOSO]"]
+2025-05-19 23:25:35,306 - INFO - Parâmetros encontrados nos links externos: ["https://images.google.com/?q=cheddar+cheese\x1b[32m ->   q: ['cheddar cheese'] \x1b[31m[PERIGOSO]", "https://news.google.com/news/search?q=brie\x1b[32m ->   q: ['brie'] \x1b[31m[PERIGOSO]"]
+2025-05-19 23:25:35,306 - INFO - Tecnologias detectadas: {'Servidor': 'Google Frontend'}
+2025-05-19 23:25:35,306 - INFO - Verificação concluída com sucesso!

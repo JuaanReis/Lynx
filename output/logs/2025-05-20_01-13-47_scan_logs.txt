@@ -1,0 +1,2 @@
+2025-05-20 01:14:23,587 - INFO - URL testada: https://www.microsoft.com/pt-br/store/b/xbox?icid=MSCOM_QL_Xbox
+2025-05-20 01:14:23,587 - ERROR - Host microsoft.com esta bloqueado por motivos de segurança.

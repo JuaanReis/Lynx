@@ -33,7 +33,7 @@ def run(user_args=None):
                 f.write(f"{args.user}:{senha}\n")
     except Exception as e:
         print(Fore.RED + f"[ERRO] Falha ao preparar combos: {e}")
-        return
+        return f"{Fore.RED}[-]" + f"{Fore.WHITE} Falha ao preparar combos: {e}"
 
     try:
         result = subprocess.run(
