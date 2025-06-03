@@ -1,10 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
+from src.utils.proxy import load_proxy
+from src.utils.config import load_header
+
+PROXY = load_proxy()
+HEADERS = load_header()
 
 def get_forms(url):
     """Verificar quais formulários estão disponíveis na URL e retornar método, action e campos."""
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=10, proxies=PROXY, headers=HEADERS)
         soup = BeautifulSoup(response.text, "html.parser")
         forms = soup.find_all("form")
         all_forms = []

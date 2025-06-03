@@ -2,13 +2,18 @@ import requests
 from colorama import Fore, init
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+from src.utils.proxy import load_proxy
+from src.utils.config import load_header
+
+PROXY = load_proxy()
+HEADERS = load_header()
 
 init(autoreset=True)
 
 #Pegar links internos de uma url
 def get_internal_links(url):
   try:
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=10, headers=HEADERS, proxies=PROXY)
     soup = BeautifulSoup(response.text, "html.parser")
     domain = urlparse(url).netloc.lower()
     internos = []

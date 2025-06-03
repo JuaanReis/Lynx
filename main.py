@@ -5,7 +5,7 @@ import random
 import socket
 import platform
 from tqdm import tqdm
-from src.core.check_memory import check_memory_limit
+from src.utils.memory import check_memory_limit
 from src.utils.ping import test_connection
 from settings import OPERATION_MODE, LEGAL_USE_ONLY, ALERT_MESSAGE
 
@@ -40,15 +40,14 @@ def exibe_banner():
     print(f"{Fore.YELLOW}[!]" + f"{Fore.WHITE} USO RESPONSÁVEL OBRIGATÓRIO!")
     print(f"{Fore.RED} [!]" + f"{Fore.WHITE} Essa ferramenta é destinada apenas para testes autorizados e ambientes controlados.")
     print(f"{Fore.RED} [!]" + f"{Fore.WHITE} O autor não se responsabiliza por qualquer uso indevido desta aplicação.\n")
-    print(f"{Fore.MAGENTA}[*]" + f"{Fore.WHITE} Contato: pinguim.secreto@gmail.com")
+    print(f"{Fore.MAGENTA}[*]" + f"{Fore.WHITE} Contato: 01pingu.noot@gmail.com")
     print(f"{Fore.BLUE}[!]" + f"{Fore.WHITE} Site oficial (em breve): https://lynxsec.io\n")
 
 def menu_principal():
     print(f"{Fore.CYAN} [*]" + f"{Fore.WHITE} Selecione uma das ferramentas disponíveis:\n")
     print(f"{Fore.BLUE}[1]" + f"{Fore.WHITE} Scanner de XSS")
     print(f"{Fore.BLUE}[2]" + f"{Fore.WHITE} Scanner de Caminhos")
-    print(f"{Fore.BLUE}[3]" + f"{Fore.WHITE} Ataques de Força Bruta")
-    print(f"{Fore.BLUE}[4]" + f"{Fore.WHITE} Scanner de SMAP" + f"{Fore.CYAN} (Sistema de Mapas de Arquivos)")
+    print(f"{Fore.BLUE}[3]" + f"{Fore.WHITE} Scanner de SMAP" + f"{Fore.CYAN} (Sistema de Mapas de Arquivos)")
     print(f"{Fore.RED}[0]" + f"{Fore.WHITE} Sair\n")
 
 def system_info():
@@ -121,27 +120,20 @@ def main():
             path.run(user_args)
 
         elif escolha == "3":
-            from src.scanners.bruteForce import brute
-            print(f"{Fore.MAGENTA}[MODO BRUTE FORCE]{Style.RESET_ALL} Insira os argumentos para iniciar a força bruta:")
-            user_input = input(f"{Fore.GREEN}> ")
-            user_args = shlex.split(user_input)
-            brute.run(user_args)
-
-        elif escolha == "4":
             from src.scanners import smap
             print(f"{Fore.MAGENTA}[INFO]" + f"{Fore.WHITE} Informações sobre o site:")
             user_input = input(f"{Fore.GREEN}> ")
             user_args = shlex.split(user_input)
             smap.run(user_args)
 
-        elif escolha == "godmode":
+        elif escolha == "godmode" or escolha == "4":
             godmode()
 
         elif escolha == "0":
             print(f"{Fore.RED}{Style.BRIGHT}Encerrando..." + f"{Fore.WHITE} Obrigado por utilizar o LYNX.{Style.RESET_ALL}")
             break
         else:
-            print(f"{Fore.RED}Opção inválida." + f"{Fore.WHITE} Tenta de novo, hacker wannabe! Isso não é tão fácil assim, vai por mim.")
+            print(f"{Fore.RED}Opção inválida." + f"{Fore.WHITE} Tente novamente.")
 
 if __name__ == "__main__":
     try:

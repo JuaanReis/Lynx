@@ -3,12 +3,12 @@ from colorama import Fore, init
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from .utils import testar_payload_stored, extrair_campos_formulario
+from .testar_payload_stored import testar_payload_stored
+from .form import extrair_campos_formulario
 
 init(autoreset=True)
 
 def scan_stored_xss(payloads, args):
-    print(f"{Fore.CYAN}[~]" + f"{Fore.WHITE} Iniciando XSS armazenado (modo automático com threads)")
     try:
         res = requests.get(args.post, timeout=10)
         soup = BeautifulSoup(res.text, 'html.parser')
@@ -22,7 +22,7 @@ def scan_stored_xss(payloads, args):
 
         resultados = []
 
-        with ThreadPoolExecutor(max_workers=args.t) as executor:
+        with ThreadPoolExecutor(max_workers=args.thread) as executor:
             futures = [executor.submit(testar_payload_stored, payload, campos, args.post, args.view) for payload in payloads]
 
             for future in tqdm(as_completed(futures), total=len(futures), desc="Testando payloads"):

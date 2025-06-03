@@ -1,9 +1,14 @@
 import requests
+from src.utils.config import load_header
+from src.utils.proxy import load_proxy
+
+PROXY = load_proxy()
+HEADERS = load_header()
 
 def get_tecnologies(url):
   """Detecta a tecnologia por tras do site"""
   try:
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=10, proxies=PROXY, headers=HEADERS)
     headers = response.headers
     tecnologias = {}
 

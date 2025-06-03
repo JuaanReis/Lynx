@@ -1,0 +1,23 @@
+[
+    { "port": 21,    "service": "FTP" },
+    { "port": 22,    "service": "SSH" },
+    { "port": 23,    "service": "Telnet" },
+    { "port": 25,    "service": "SMTP" },
+    { "port": 53,    "service": "DNS" },
+    { "port": 80,    "service": "HTTP" },
+    { "port": 110,   "service": "POP3" },
+    { "port": 143,   "service": "IMAP" },
+    { "port": 443,   "service": "HTTPS" },
+    { "port": 465,   "service": "SMTPS" },
+    { "port": 993,   "service": "IMAPS" },
+    { "port": 995,   "service": "POP3S" },
+    { "port": 3306,  "service": "MySQL" },
+    { "port": 3389,  "service": "RDP" },
+    { "port": 5432,  "service": "PostgreSQL" },
+    { "port": 5900,  "service": "VNC" },
+    { "port": 6379,  "service": "Redis" },
+    { "port": 8080,  "service": "HTTP-alt" },
+    { "port": 8443,  "service": "HTTPS-alt" },
+    { "port": 9200,  "service": "Elasticsearch" },
+    { "port": 27017, "service": "MongoDB" }
+]

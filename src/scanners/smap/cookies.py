@@ -1,10 +1,15 @@
 import requests
 from colorama import Fore, init
+from src.utils.proxy import load_proxy
+from src.utils.config import load_header
 
 init(autoreset=True)
+PROXY = load_proxy()
+HEADERS = load_header()
+
 def get_cookies(url):
   try:
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=10, proxies=PROXY, headers=HEADERS)
     cookies = response.cookies
     if not cookies:
       return [f"{Fore.RED}[-]" + f"{Fore.WHITE} Nenhum cookie encontrado."]

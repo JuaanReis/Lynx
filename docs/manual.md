@@ -19,6 +19,7 @@ Os módulos atuais incluem:
 - **XSS Scanner**
 - **Brute Force**
 - **Path Scanner**
+- **Smap: scanner de informações**
 
 ## Usando o Bash da Raiz
 
