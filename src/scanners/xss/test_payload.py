@@ -7,7 +7,6 @@ from colorama import Fore, init
 from src.utils.config import load_header
 from src.utils.proxy import load_proxy
 
-
 init(autoreset=True)
 
 HEADERS = load_header()

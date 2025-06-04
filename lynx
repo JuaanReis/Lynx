@@ -1,41 +1,41 @@
 #!/bin/bash
 
-if [ ! -d venv ]; then
-  echo "[-] Ambiente venv não criado"
-  python3 -m venv venv
-  source venv/bin/activate
-  pip install -r requirements.txt
-else
-  source venv/bin/activate
+# Cores
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # Sem cor
+
+# Função pra printar bonito
+info() { echo -e "${CYAN}[INFO]${NC} $1"; }
+erro() { echo -e "${RED}[ERRO]${NC} $1"; }
+ok()   { echo -e "${GREEN}[OK]${NC} $1"; }
+
+# Checar se o requirements.txt existe
+if [ ! -f "requirements.txt" ]; then
+    erro "Arquivo requirements.txt não encontrado!"
+    exit 1
 fi
 
-echo "Escolha um modo de execução:"
-echo "1 - Normal"
-echo "2 - DEV"
-read -p "Digite o número da opção desejada: " option
+# Checar se o venv existe
+if [ ! -d "venv" ]; then
+    info "Criando ambiente virtual..."
+    python3 -m venv venv || { erro "Falha ao criar venv"; exit 1; }
+    source venv/bin/activate
+    info "Instalando dependências..."
+    pip install -r requirements.txt || { erro "Falha ao instalar requirements"; exit 1; }
+    ok "Ambiente virtual pronto!"
+else
+    ok "Ativando ambiente virtual existente..."
+    source venv/bin/activate
+fi
 
-case $option in
-  1)
-    if [ ! -d venv ]; then
-        python3 -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-    else 
-        source venv/bin/activate
-    fi
+# Rodar o main.py em novo terminal (se tiver gnome-terminal)
+if command -v gnome-terminal &> /dev/null; then
+    info "Abrindo gnome-terminal e rodando main.py..."
     gnome-terminal -- bash -c "python3 main.py; exec bash"
-    ;;
-  2)if [ ! -d venv ]; then
-        python3 -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-    else
-        source venv/bin/activate
-    fi
-    gnome-terminal -- bash -c "python3 mainLight.py; exec bash"
-    ;;
-  *)
-    echo "Opção inválida. Saindo..."
-    exit 1
-    ;;
-esac
+else
+    info "Rodando no terminal atual (gnome-terminal não encontrado)..."
+    python3 main.py
+fi

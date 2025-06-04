@@ -15,9 +15,12 @@ from .links import get_external_links, get_internal_links
 from .title import get_title
 from .params import get_params
 from src.utils.file_logs import setup_logs
+from src.utils.config import load_host
 
 init(autoreset=True)
 setup_logs()
+
+host = load_host()
 
 with open("./src/scanners/smap/ports.json", "r") as f:
     PORTS = json.load(f)
@@ -34,6 +37,19 @@ def run(user_args=None):
     parser = argparse.ArgumentParser(description="Scanner geral")
     parser.add_argument("-u", "--url", required=True, help="URL do alvo")
     args = parser.parse_args(user_args)
+
+    from urllib.parse import urlparse
+    parsed = urlparse(args.url)
+    domain = parsed.netloc
+    if domain.startswith("www."):
+        domain = domain[4:]
+    for k in host:
+        if domain == k or domain.endswith("." + k):
+            from src.scanners.path.color import print_color
+            print_color("!", "Host bloqueado por motivos de segurança.", Fore.RED)
+            logging.error(f"Host {domain} esta bloqueado por motivos de segurança.")
+            return
+
     main(args.url)
 
 def print_header(msg, color=Fore.GREEN):

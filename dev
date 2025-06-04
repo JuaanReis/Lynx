@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ ! -d venv ]; then
+  echo "[-] Ambiente venv não criado"
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+else
+  source venv/bin/activate
+fi
+
+echo "Escolha um modo de execução:"
+echo "1 - Normal"
+echo "2 - DEV"
+read -p "Digite o número da opção desejada: " option
+
+case $option in
+  1)
+    if [ ! -d venv ]; then
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    else 
+        source venv/bin/activate
+    fi
+    gnome-terminal -- bash -c "python3 main.py; exec bash"
+    ;;
+  2)if [ ! -d venv ]; then
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    else
+        source venv/bin/activate
+    fi
+    gnome-terminal -- bash -c "python3 mainLight.py; exec bash"
+    ;;
+  *)
+    echo "Opção inválida. Saindo..."
+    exit 1
+    ;;
+esac

@@ -9,7 +9,7 @@ def setup_logs():
   if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-  log_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + "_scan_logs.txt"
+  log_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + "_scan_logs.log"
   log_path = os.path.join(log_dir, log_filename)
 
   logging.basicConfig(

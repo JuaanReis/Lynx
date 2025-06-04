@@ -4,8 +4,8 @@ from colorama import Fore, init
 from urllib.parse import urlparse
 import logging
 from src.utils.file_utils import load_payloads
-from .reflected import scan_reflect_xss
-from .stored import scan_stored_xss
+from .block_host import block_host
+from .logs import logs
 from src.utils.config import load_host
 
 init(autoreset=True)
@@ -26,12 +26,6 @@ def get_args_from_list(arg_list):
 
 #Main
 def main(args):
-    logging.info(f"Executando o scanner de XSS com os seguintes parâmetros: {args}")
-    logging.info(f"Payloads carregados: {args.payload}")
-    logging.info(f"Tipo de ataque: {args.type}")
-    logging.info(f"URL alvo: {args.url}")
-    logging.info(f"Limite de payloads: {args.limit}")
-    logging.info(f"Threads: {args.thread}")
 
     all_payloads = load_payloads(args.payload)
     payloads = all_payloads[:args.limit] if args.limit else all_payloads
@@ -41,27 +35,36 @@ def main(args):
         if not args.post or not args.view:
             print(f"{Fore.RED}[!]" + f"{Fore.WHITE} Você precisa fornecer --post e --view para o modo armazenado")
             sys.exit(1)
+        from .stored import scan_stored_xss
         scan_stored_xss(payloads, args)
+
     elif args.type == "refletido" or args.type == "r":
         if not args.url:
             print(f"{Fore.RED}[!]" + f"{Fore.WHITE} Você precisa fornecer --url para o modo refletido")
             sys.exit(1)
+        from .reflected import scan_reflect_xss
         scan_reflect_xss(payloads, args)
 
 def run(user_args):
     try:
         args = get_args_from_list(user_args)
+
+        """Extrai o dominio da URL"""
         parsed = urlparse(args.url)
         domain = parsed.netloc
         if domain.startswith("www."):
             domain = domain[4:]
-        for k in host:
-            if domain == k or domain.endswith("." + k):
-                print(f"{Fore.RED}[!]" + f"{Fore.WHITE} Host {domain} esta bloqueado por motivos de segurança.")
-                logging.info(f"URL testada: {args.url}")
-                logging.error(f"Host {domain} esta bloqueado por motivos de segurança.")
-                return
+
+        """Registra logs de execução do scanner de XSS"""
+        logs(args, domain)
+
+        """Inicia o scanner de XSS"""
         main(args)
+
+        """Bloqueia hosts não permitidos"""
+        if block_host(args, host):
+            sys.exit(1)
+            
     except KeyboardInterrupt:
         print(f"{Fore.RED} \n[!]" + f"{Fore.WHITE} Scan interrompido pelo usuário.")
     except Exception as e:

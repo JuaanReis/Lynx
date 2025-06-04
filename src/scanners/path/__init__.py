@@ -15,17 +15,17 @@ init(autoreset=True)
 
 
 setup_logs()
-found_path.clear()
 host = load_host()
+found_path.clear()
 
 def run(user_args):
     parser = argparse.ArgumentParser(description="Scanner de diretórios do Nexor")
     parser.add_argument("-u", "--url", help="URL alvo do teste", required=True)
-    parser.add_argument("-w", help="Caminho do arquivo txt com os paths", default="path.txt")
+    parser.add_argument("-w", help="Tipo de wordlist Ex:Admin ", default="path.txt")
     parser.add_argument("-l", type=int, help="Limite de caminhos a testar", default=5000)
     parser.add_argument("-t", type=int, help="Número de threads", default=10)
     parser.add_argument("-s", "--status", type=int, nargs="+", default=[200], help="Códigos HTTP válidos")
-    parser.add_argument("-d", type=float, nargs=2, metavar=('MIN', 'MAX'), help="Delay entre requisições", default=(0, 0))
+    parser.add_argument("-d", type=float, nargs=2, metavar=('MIN', 'MAX'), help="Delay entre requisições", default=(0.3, 0.5))
     parser.add_argument("-m", "--mode", choices=["normal", "debug"], default="normal", help="Modo de operação")
 
     args = parser.parse_args(user_args)
@@ -40,21 +40,36 @@ def run(user_args):
             logging.error(f"Host {domain} esta bloqueado por motivos de segurança.")
             return
 
+
+    """Limite de threads"""
     if args.t > 50:
         res = input(Fore.YELLOW + "[!] Mais de 50 threads pode travar tudo. Continuar? (Y/N): ").strip().lower()
         if res != 'y':
             print_color("!", "Limitando para 50 threads.", Fore.YELLOW)
             args.t = 50
 
+    """Limite de caminhos pro modo admin"""
+    if args.w == "admin":
+        args.w = "admin_paths.txt"
+        if args.l > 1000:
+            print(f"{Fore.YELLOW}[!] Ajustando o limite de 1000 caminhos para admin.{Style.RESET_ALL}")
+            args.l = 1000
+        else:
+            pass
+    else:
+        args.w = "path.txt"
+    """Carrega a wordlist"""
     payloads = load_payloads(args.w)
 
+
+    """Limite de payloads"""
     if args.l >= 100000:
         res = input(Fore.RED + "[!] Isso pode ferrar o servidor. Continuar mesmo assim? (Y/N): ").strip().lower()
         if res != 'y':
             print_color("+", "Limitando para 10000 paths.", Fore.GREEN)
             args.l = 10000
         else:
-            print_color("!", "Enviando 100k+ paths. GG pro servidor.", Fore.YELLOW)
+            print_color("!", "Enviando 100k+ paths.", Fore.YELLOW)
 
     payloads = payloads[:args.l]
 
@@ -91,6 +106,7 @@ def run(user_args):
         logging.error("Scan interrompido pelo usuário.")
         return "!", "Scan interrompido pelo usuário."
 
+    """Calcula o tempo total de execução"""
     duration = datetime.now() - start_time
 
     print()
@@ -103,11 +119,13 @@ def run(user_args):
     print()
 
     if found_path:
-        print_color("+", "Caminhos válidos encontrados:", Fore.GREEN)
         logging.info("Caminhos válidos encontrados:")
-        for url, status in found_path:
-            print(f"{Fore.BLUE}[{status}]{Style.RESET_ALL} {url}")
-            logging.info(f"[{status}] {url}")
+        if args.mode == "debug":
+            for url, status in found_path:
+                print(f"{Fore.BLUE}[{status}]{Style.RESET_ALL} {url}")
+                logging.info(f"[{status}] {url}")
+        else:
+                print(f"{Fore.GREEN}[+] {Fore.WHITE}{len(found_path)} paths foram encontrados")
     else:
         print_color("-", "Nenhum caminho válido foi encontrado.", Fore.RED)
         logging.info("Nenhum caminho válido foi encontrado.")
