@@ -17,8 +17,8 @@ O projeto começou com funções básicas de XSS e brute force, mas é planejado
 - **Path Scanner**
   Faz varredura de diretórios e arquivos comuns expostos no servidor.
 
-- **Brute Force**
-  Testa credenciais em formulários de login simples usando listas de usuário/senha.
+- **Scanner de informações (Smap)**
+  Pega informações de um site com uma URL, pegando headers, Cors, informações de cookies, portas, formulários, informações de backend 
 
 Essas funções são implementadas com base em técnicas clássicas usadas em testes manuais e automatizados, voltadas para aprendizado, labs e análises rápidas.
 
