@@ -12,7 +12,7 @@ def get_ssl(url):
       with context.wrap_socket(sock, server_hostname=hostname) as ssock:
         cert = ssock.getpeercert()
         espira = datetime.strptime(cert.get('notAfter'), '%b %d %H:%M:%S %Y %Z')
-        status = "valido" if espira > datetime.now() else "expirado"
+        status = "valid" if espira > datetime.now() else "expired"
         return {
           "status": status,
           "validade": espira.strftime('%Y-%m-%d %H:%M:%S'),

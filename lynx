@@ -7,7 +7,7 @@ CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # Sem cor
 
-# Função pra printar bonito
+# Funções de print
 info() { echo -e "${CYAN}[INFO]${NC} $1"; }
 erro() { echo -e "${RED}[ERRO]${NC} $1"; }
 ok()   { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -29,6 +29,35 @@ if [ ! -d "venv" ]; then
 else
     ok "Ativando ambiente virtual existente..."
     source venv/bin/activate
+fi
+
+# Tenta iniciar o Tor
+if command -v tor &> /dev/null; then
+    info "Iniciando serviço Tor em background..."
+    tor &> /dev/null &
+    sleep 3
+    if pgrep -x tor > /dev/null; then
+        ok "Tor iniciado com sucesso!"
+    else
+        erro "Falha ao iniciar o Tor. Verifique se está tudo certo com a instalação."
+    fi
+else
+    erro "Tor não está instalado."
+    read -p "Deseja instalar o Tor agora? [s/N]: " resposta
+    if [[ "$resposta" =~ ^[sS]$ ]]; then
+        if command -v apt &> /dev/null; then
+            info "Instalando Tor com apt..."
+            sudo apt update && sudo apt install -y tor || { erro "Falha ao instalar Tor"; exit 1; }
+            ok "Tor instalado!"
+            tor &> /dev/null &
+        else
+            erro "Gerenciador de pacotes não suportado automaticamente. Instale o Tor manualmente."
+            exit 1
+        fi
+    else
+        erro "Tor não instalado. Abortando execução."
+        exit 1
+    fi
 fi
 
 # Rodar o main.py em novo terminal (se tiver gnome-terminal)

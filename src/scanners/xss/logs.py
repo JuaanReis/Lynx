@@ -9,9 +9,6 @@ def logs(args, domain):
     logging.info(f"URL alvo: {args.url}")
     logging.info(f"Limite de payloads: {args.limit}")
     logging.info(f"Threads: {args.thread}")
-
     logging.info(f"URL testada: {args.url}")
-    logging.error(f"Host {domain} esta bloqueado por motivos de segurança.")
   except Exception as e:
-    logging.error(f"Erro ao registrar logs: {e}")
     print(f"[ERRO] Algo deu ruim ao registrar logs: {e}")

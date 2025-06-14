@@ -8,7 +8,7 @@ def load_header(path="data/config.json"):
   return data.get("headers", {})
 
 #Host
-def load_host(path="data/config.json"):
+def load_host(path="data/host.json"):
   import json
   with open(path, "r", encoding="utf-8") as f:
     data = json.load(f)

@@ -15,10 +15,10 @@ def get_cors(url):
     cors = response.headers.get("Access-Control-Allow-Origin")
     if cors:
       if cors == "*":
-        return f"{Fore.GREEN}[!]" + f"{Fore.WHITE} CORS aberto para qualquer origem: {cors}"
+        return f" CORS aberto para qualquer origem: {cors}"
       else:
-        return f"{Fore.RED}[-]" + f"{Fore.WHITE} CORS restrito para: {cors}"
+        return f"CORS restrito para: {cors}"
     else:
-      return f"{Fore.RED}[-]" + f"{Fore.WHITE} CORS:" + f"{Fore.RED} Não encontrado"
+      return "CORS Não encontrado"
   except Exception as e:
-    return f"{Fore.RED}[-]" + f"{Fore.WHITE} Erro ao verificar CORS: {e}"
+    return f" Erro ao verificar CORS: {e}"

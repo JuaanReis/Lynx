@@ -5,10 +5,9 @@ init(autoreset=True)
 
 def get_protocol(url):
   """Verificar o protocolo utilizado na URL (HTTP ou HTTPS)."""
-  parsed_url = urlparse(url)
-  if parsed_url.scheme == "https":
-    return f"{Fore.GREEN}->" + f"{Fore.WHITE} Protocolo: HTTPS" + f"{Fore.GREEN} Seguro" + f"{Fore.WHITE}(SSL)"
-  elif parsed_url.scheme == "http":
-    return f"{Fore.RED}->" + f"{Fore.WHITE} Protocolo: HTTP" + f"{Fore.RED} Inseguro"
-  else:
-    return f"{Fore.RED}[-]" + f"{Fore.WHITE} Protocolo desconhecido: {parsed_url.scheme}"
+  try:
+    parsed_url = urlparse(url)
+    protocol = parsed_url.scheme.upper()
+    return protocol
+  except Exception as e:
+    return f"{Fore.RED}Erro ao obter protocolo: {e}"

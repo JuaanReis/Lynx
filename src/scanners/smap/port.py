@@ -26,5 +26,5 @@ def scan_ports(host, ports, timeout=10):
             open_ports = [port for port in results if port is not None]
         return open_ports
     except Exception as e:
-        print(f"{Fore.RED}[-]{Fore.WHITE} Erro ao escanear portas: {e}")
+        print(f"Erro ao escanear portas: {e}")
         return []

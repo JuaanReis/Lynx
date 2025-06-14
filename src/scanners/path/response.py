@@ -16,4 +16,4 @@ def is_valid_response(response, valid_status):
         "documento não encontrado", "document not found", "page not found",
         "servidor não encontrado", "server not found", "pagina não encontrada", "invalid request:"
     ]
-    return not any(p in content or p in title for p in invalid_patterns)
+    return not any(p in content or p in title for p in invalid_patterns)  

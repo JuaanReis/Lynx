@@ -60,15 +60,12 @@ def system_info():
 
 def main():
     # Exibe banner inicial
-    exibe_banner()
-    system_info()
+    menu_principal()
 
     # Loop principal de interação
     while True:
         # Verifica o uso de memória antes de cada operação importante
-        check_memory_limit(MEMORY_LIMIT)
 
-        menu_principal()
         escolha = input(f"{Fore.GREEN}[!]{Fore.WHITE} Digite o número da opção desejada: ").strip()
 
         if escolha == "1":

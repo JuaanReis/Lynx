@@ -1,6 +1,5 @@
 import argparse
-from colorama import Fore, Style, init
-from .color import print_color
+from src.utils.prints import print_data, print_alert, print_item, print_end_item
 from .checkpath import check_path, found_path
 from src.utils.file_utils import load_payloads
 from datetime import datetime
@@ -9,17 +8,21 @@ from urllib.parse import urlparse
 from tqdm import tqdm
 from src.utils.config import load_host
 from src.utils.file_logs import setup_logs
+import random
+import string
+import requests
 import logging
-
-init(autoreset=True)
 
 
 setup_logs()
 host = load_host()
 found_path.clear()
 
+def gerar_path(size=16):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=size))
+
 def run(user_args):
-    parser = argparse.ArgumentParser(description="Scanner de diretórios do Nexor")
+    parser = argparse.ArgumentParser(description="Scanner de diretórios do Lynx")
     parser.add_argument("-u", "--url", help="URL alvo do teste", required=True)
     parser.add_argument("-w", help="Tipo de wordlist Ex:Admin ", default="path.txt")
     parser.add_argument("-l", type=int, help="Limite de caminhos a testar", default=5000)
@@ -30,32 +33,31 @@ def run(user_args):
 
     args = parser.parse_args(user_args)
 
+    path_f = gerar_path(16)
+    url_fake = args.url.rstrip("/") + "/" + path_f
+    try:
+        response_fake = requests.get(url_fake, timeout=10)
+        fake_body = response_fake.text
+    except Exception as e:
+        print_alert(f"Erro ao obter resposta fake {e}")
+        fake_body = None
+
     parsed = urlparse(args.url)
     domain = parsed.netloc
     if domain.startswith("www."):
         domain = domain[4:]
     for k in host:
         if domain == k or domain.endswith("." + k):
-            print_color("!", "Host bloqueado por motivos de segurança.", Fore.RED)
+            print_alert(f"Host {domain} bloqueado por motivos de segurança.")
             logging.error(f"Host {domain} esta bloqueado por motivos de segurança.")
             return
-
-
-    """Limite de threads"""
-    if args.t > 50:
-        res = input(Fore.YELLOW + "[!] Mais de 50 threads pode travar tudo. Continuar? (Y/N): ").strip().lower()
-        if res != 'y':
-            print_color("!", "Limitando para 50 threads.", Fore.YELLOW)
-            args.t = 50
 
     """Limite de caminhos pro modo admin"""
     if args.w == "admin":
         args.w = "admin_paths.txt"
         if args.l > 1000:
-            print(f"{Fore.YELLOW}[!] Ajustando o limite de 1000 caminhos para admin.{Style.RESET_ALL}")
+            print_alert("Ajustando o limite de 1000 caminhos para admin.")
             args.l = 1000
-        else:
-            pass
     else:
         args.w = "path.txt"
     """Carrega a wordlist"""
@@ -64,30 +66,32 @@ def run(user_args):
 
     """Limite de payloads"""
     if args.l >= 100000:
-        res = input(Fore.RED + "[!] Isso pode ferrar o servidor. Continuar mesmo assim? (Y/N): ").strip().lower()
+        res = input("[!!] Isso pode ferrar o servidor. Continuar mesmo assim? (Y/N): ").strip().lower()
         if res != 'y':
-            print_color("+", "Limitando para 10000 paths.", Fore.GREEN)
+            print_alert("Limitando para 10000 paths.")
             args.l = 10000
         else:
-            print_color("!", "Enviando 100k+ paths.", Fore.YELLOW)
+            print_alert("Enviando 100k+ paths.")
 
     payloads = payloads[:args.l]
 
     print()
-    print_color("+", "Iniciando varredura de diretórios...", Fore.GREEN)
+    print_data("Iniciando varredura de diretórios...")
     logging.info(f"Executando o scanner de diretórios com os seguintes parâmetros: {args}")
     print()
-    print_color("+", f"Alvo: {args.url}", Fore.GREEN)
+    print_data(f"Target: {args.url}")
     logging.info(f"URL alvo: {args.url}")
-    print_color("+", f"Wordlist: {args.w}", Fore.GREEN)
+    print_item(f"Wordlist: {args.w}")
     logging.info(f"Wordlist: {args.w}")
-    print_color("+", f"Total de paths: {len(payloads)}", Fore.GREEN)
+    print_item(f"Total paths: {len(payloads)}")
     logging.info(f"Total de paths: {len(payloads)}")
-    print_color("+", f"Threads: {args.t}", Fore.GREEN)
+    print_item(f"Threads: {args.t}")
     logging.info(f"Threads: {args.t}")
-    print_color("+", f"Status válidos: {args.status}", Fore.GREEN)
+    print_item(f"Delay: {args.d}")
+    logging.info(f"Delay: {args.d}")
+    print_item(f"Valid stats: {args.status}")
     logging.info(f"Status válidos: {args.status}")
-    print_color("+", f"Modo: {args.mode.capitalize()}", Fore.GREEN)
+    print_end_item(f"Mode: {args.mode.capitalize()}")
     logging.info(f"Modo: {args.mode.capitalize()}")
     print()
 
@@ -96,36 +100,38 @@ def run(user_args):
     try:
         with ThreadPoolExecutor(max_workers=args.t) as executor:
             list(tqdm(
-                executor.map(lambda p: check_path(p, args.url, args.status, args.d, args.mode), payloads),
+                executor.map(lambda p: check_path(p, args.url, args.status, args.d, args.mode, fake_body), payloads),
                 total=len(payloads),
-                desc="[+] Testando caminhos",
+                desc="Testando caminhos",
                 ncols=100
             ))
     except KeyboardInterrupt:
-        print_color("!", "Scan interrompido pelo usuário.", Fore.YELLOW)
+        print_alert("Scan interrompido pelo usuário.")
         logging.error("Scan interrompido pelo usuário.")
-        return "!", "Scan interrompido pelo usuário."
+        return "Scan interrompido pelo usuário."
 
     """Calcula o tempo total de execução"""
     duration = datetime.now() - start_time
 
     print()
-    print_color("+", "Scan finalizado.", Fore.GREEN)
-    logging.info("Scan finalizado.")
-    print_color("+", f"Diretórios encontrados: {len(found_path)}", Fore.GREEN)
+    print_data("Scan finalizado.")
+    print_item(f"Diretorios encontrados: {len(found_path)}")
     logging.info(f"Diretórios encontrados: {len(found_path)}")
-    print_color("+", f"Tempo total: {str(duration).split('.')[0]}", Fore.GREEN)
+    print_end_item(f"Tempo total: {str(duration).split('.')[0]}")
     logging.info(f"Tempo total: {str(duration).split('.')[0]}")
     print()
 
     if found_path:
-        logging.info("Caminhos válidos encontrados:")
+        logging.info("Caminhos encontrados:")
         if args.mode == "debug":
-            for url, status in found_path:
-                print(f"{Fore.BLUE}[{status}]{Style.RESET_ALL} {url}")
-                logging.info(f"[{status}] {url}")
+            for i, (url, status) in enumerate(found_path):
+                if i == len(found_path) - 1:
+                    print_end_item(f"[{status}] {url}")
+                else:
+                    print_item(f"[{status}] {url}")
+                    logging.info(f"[{status}] {url}")
         else:
-                print(f"{Fore.GREEN}[+] {Fore.WHITE}{len(found_path)} paths foram encontrados")
+            print_data(f"Um total de {len(found_path)} caminhos foram encontrados")
     else:
-        print_color("-", "Nenhum caminho válido foi encontrado.", Fore.RED)
+        print_alert("Nenhum caminho válido foi encontrado.")
         logging.info("Nenhum caminho válido foi encontrado.")

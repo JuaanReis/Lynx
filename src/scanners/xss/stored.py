@@ -5,6 +5,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from .testar_payload_stored import testar_payload_stored
 from .form import extrair_campos_formulario
+from src.utils.prints import print_alert, print_data, print_item, print_end_item
 
 init(autoreset=True)
 
@@ -14,11 +15,15 @@ def scan_stored_xss(payloads, args):
         soup = BeautifulSoup(res.text, 'html.parser')
         form = soup.find("form")
         if not form:
-            print(f"{Fore.RED}[-]" f"{Fore.WHITE} Nenhum formulário encontrado.")
+            print_alert(f" Nenhum formulário encontrado.")
             return
 
         campos = extrair_campos_formulario(form)
-        print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} Campos detectados: {list(campos.keys())}")
+        for i, (campo, tipo) in enumerate(campos.items()):
+            if i == len(campos) - 1:
+                print_end_item(f" Campo: {campo} | Tipo: {tipo}\n")
+            else:
+                print_item(f" Campo: {campo} | Tipo: {tipo}")
 
         resultados = []
 
@@ -29,14 +34,20 @@ def scan_stored_xss(payloads, args):
                 payload_result = future.result()
                 if isinstance(payload_result[1], bool) and payload_result[1]:
                     resultados.append(payload_result[0])
+        print() # Quebra de linha
 
-        print(f"\n{Fore.YELLOW}[!]" + f"{Fore.WHITE} Resultados do Scanner Armazenado")
+        print_data(f" Resultados do Scanner Armazenado")
         if resultados:
-            for payload in resultados:
-                print(f"{Fore.GREEN}[+]" + f"{Fore.WHITE} XSS armazenado DETECTADO: {payload}")
-            print(f"{Fore.MAGENTA}[✓]" + f"{Fore.WHITE} Total de payloads bem-sucedidos: {len(resultados)}")
+            if args.debug:
+                for i, payload in enumerate(resultados):
+                    if i == len(resultados) - 1:
+                        print_end_item(f"{Fore.MAGENTA}[{i+1}]" + f"{Fore.WHITE} Payload: {payload}")
+                    else:
+                        print_item(f"{Fore.MAGENTA}[{i+1}]" + f"{Fore.WHITE} Payload: {payload}")
+            else:
+                print_data(f"{Fore.WHITE} Total de payloads bem-sucedidos: {len(resultados)}")
         else:
-            print(f"{Fore.RED}[-]" + f"{Fore.WHITE} Nenhum XSS armazenado detectado.")
+            print(f"{Fore.WHITE} Nenhum XSS armazenado detectado.")
 
     except Exception as e:
-        print(f"{Fore.RED}[!]" + f"{Fore.WHITE} Falha ao configurar o ataque: {e}")
+        print_alert(f"Falha ao configurar o ataque: {e}")

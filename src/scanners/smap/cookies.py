@@ -12,7 +12,7 @@ def get_cookies(url):
     response = requests.get(url, timeout=10, proxies=PROXY, headers=HEADERS)
     cookies = response.cookies
     if not cookies:
-      return [f"{Fore.RED}[-]" + f"{Fore.WHITE} Nenhum cookie encontrado."]
+      return [f"{Fore.WHITE} Nenhum cookie encontrado."]
     detalhes = []
     for cookie in cookies:
       info = f"{cookie.name}={cookie.value}"
@@ -25,4 +25,4 @@ def get_cookies(url):
       detalhes.append(info)
     return detalhes
   except Exception as e:
-    return [f"{Fore.RED}[-]" + f"{Fore.WHITE} Erro ao coletar cookies: {e}"]
+    return [f"Erro ao coletar cookies: {e}"]

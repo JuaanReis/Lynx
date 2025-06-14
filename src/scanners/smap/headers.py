@@ -16,5 +16,5 @@ def get_headers(url):
     headers = response.headers
     return dict(headers)
   except requests.RequestException as e:
-    print(f"{Fore.RED}[-]" + f"{Fore.WHITE} Erro ao coletar cabeçalhos: {e}")
+    print(f" Erro ao coletar cabeçalhos: {e}")
     return {}
