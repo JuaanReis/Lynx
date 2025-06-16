@@ -23,10 +23,10 @@ setup_logs()
 
 host = load_host()
 
-with open("./src/scanners/smap/ports.json", "r") as f:
+with open("./src/core/smap/ports.json", "r") as f:
     PORTS = json.load(f)
 
-with open("./src/scanners/smap/headers_r.json", "r") as f:
+with open("./src/core/smap/headers_r.json", "r") as f:
     HEADERS_RECOMENDADOS = json.load(f)
 
 # Cabeçalhos recomendados

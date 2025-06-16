@@ -38,9 +38,7 @@ def exibe_banner():
     if OPERATION_MODE == "test":
         print(f"{Fore.YELLOW}[!]{Fore.WHITE} A ferramenta está em modo de teste. Algumas funcionalidades podem ser limitadas.{Style.RESET_ALL}")
 
-    print(f"{Fore.CYAN}[*]" + f"{Fore.WHITE} Ferramenta de testes para varredura e exploração web para pesquisadores de segurança.")
-    print(f"{Fore.RED}[!]{Fore.WHITE} Essa ferramenta é destinada apenas para testes autorizados e ambientes controlados.")
-    print(f"{Fore.MAGENTA}[*]{Fore.WHITE} Contato: 01pingu.noot@gmail.com")
+    print(f"{Fore.MAGENTA}[#]{Fore.WHITE} Contato: 01pingu.noot@gmail.com")
 
 def menu_principal():
     print(f"{Fore.CYAN}[*]{Fore.WHITE} Selecione uma das ferramentas disponíveis:\n")
@@ -59,17 +57,18 @@ def system_info():
         print(f"{Fore.RED}[ERRO]{Fore.WHITE} Ocorreu um erro ao verificar a conexão: {e}")
 
 def main():
+    exibe_banner()
+
     # Exibe banner inicial
     menu_principal()
 
     # Loop principal de interação
     while True:
-        # Verifica o uso de memória antes de cada operação importante
 
         escolha = input(f"{Fore.GREEN}[!]{Fore.WHITE} Digite o número da opção desejada: ").strip()
 
         if escolha == "1":
-            from src.scanners import xss
+            from src.core import xss
             print(f"{Fore.MAGENTA}[MODO XSS]{Style.RESET_ALL} Insira os argumentos para execução do scanner de XSS:")
             user_input = input(f"{Fore.GREEN}> {Fore.WHITE}")
             user_args = shlex.split(user_input)
@@ -79,7 +78,7 @@ def main():
                 print(f"{Fore.RED}[ERRO]{Fore.WHITE} Ocorreu um erro com o scanner de XSS: {e}")
 
         elif escolha == "2":
-            from src.scanners import path
+            from src.core import path
             print(f"{Fore.MAGENTA}[MODO PATH]{Style.RESET_ALL} Insira os argumentos para execução do scanner de diretórios:")
             user_input = input(f"{Fore.GREEN}> {Fore.WHITE}")
             user_args = shlex.split(user_input)
@@ -89,7 +88,7 @@ def main():
                 print(f"{Fore.RED}[ERRO]{Fore.WHITE} Ocorreu um erro com o scanner de caminhos: {e}")
 
         elif escolha == "3":
-            from src.scanners import smap
+            from src.core import smap
             print(f"{Fore.MAGENTA}[SMAP]{Fore.WHITE} Scanner de web sites:")
             user_input = input(f"{Fore.GREEN}> {Fore.WHITE}")
             user_args = shlex.split(user_input)

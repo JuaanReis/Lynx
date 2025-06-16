@@ -15,7 +15,7 @@ def parse_args():
 def main(args):
   """Executa o scanner de acordo com o modo especificado"""
   if args.xss:
-      from src.scanners import xss
+      from src.core import xss
       user_input = input(f"{Fore.GREEN}>   {Fore.WHITE}")
       user_args = shlex.split(user_input)
       try:
@@ -23,7 +23,7 @@ def main(args):
       except Exception as e:
         print(f"{Fore.RED}[!]{Fore.WHITE}{e}")
   elif args.path:
-      from src.scanners import path
+      from src.core import path
       user_input = input(f"{Fore.GREEN}>   {Fore.WHITE}")
       user_args = shlex.split(user_input)
       try:
@@ -31,7 +31,7 @@ def main(args):
       except Exception as e:
         print(f"{Fore.RED}[!]{Fore.WHITE}{e}")
   elif args.smap:
-      from src.scanners import smap
+      from src.core import smap
       user_input = input(f"{Fore.GREEN}>   {Fore.WHITE}")
       user_args = shlex.split(user_input)
       try:

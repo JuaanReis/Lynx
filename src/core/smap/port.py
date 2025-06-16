@@ -1,8 +1,5 @@
 import socket
-from colorama import Fore, init
 from concurrent.futures import ThreadPoolExecutor
-
-init(autoreset=True)
 
 def scan_ports(host, ports, timeout=10):
     """Lê as portas de um host e retorna uma lista de portas abertas."""

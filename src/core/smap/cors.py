@@ -1,12 +1,9 @@
 import requests
-from colorama import Fore, init
 from src.utils.proxy import load_proxy
 from src.utils.config import load_header
 
 PROXY = load_proxy()
 HEADERS = load_header()
-
-init(autoreset=True)
 
 def get_cors(url):
   """Verificar o CORS no site"""

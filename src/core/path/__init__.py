@@ -13,7 +13,6 @@ import string
 import requests
 import logging
 
-
 setup_logs()
 host = load_host()
 found_path.clear()

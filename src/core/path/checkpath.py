@@ -15,7 +15,7 @@ found_path = []
 
 HEADERS = load_header()
 
-def check_path(path, base_url, valid_status, delay_range, mode, fake_body, args):
+def check_path(path, base_url, valid_status, delay_range, mode, fake_body):
     url = urljoin(base_url.rstrip("/") + "/", path.lstrip("/"))
     try:
         response = requests.get(url, headers=HEADERS, timeout=10, allow_redirects=False)
