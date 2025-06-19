@@ -17,10 +17,8 @@ O projeto começou com funções básicas de XSS e scan de headers, mas é plane
 - **Path Scanner**
   Faz varredura de diretórios e arquivos comuns expostos no servidor.
 
-<<<<<<< HEAD
 - **Scanner de informações (Smap)**
   Pega informações de um site com uma URL, pegando headers, Cors, informações de cookies, portas, formulários, informações de backend 
-=======
 - **Smap**
   Puxa dados completo de um site através da URL assim como:
     - Headers
@@ -30,7 +28,6 @@ O projeto começou com funções básicas de XSS e scan de headers, mas é plane
     - Links
     - Portas abertas
     - Tecnologia do backend
->>>>>>> ad1f80f (mudança na arvore de arquivos)
 
 Essas funções são implementadas com base em técnicas clássicas usadas em testes manuais e automatizados, voltadas para aprendizado, labs e análises rápidas.
 
