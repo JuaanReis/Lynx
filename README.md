@@ -1,58 +1,68 @@
 # LYNX - Web Security Suite 2025
 
-**LYNX** é uma ferramenta de varredura e exploração de vulnerabilidades web feita para quem precisa de algo leve, rápido e funcional.
-Voltada para entusiastas, estudantes e profissionais de segurança, ela foca no essencial: encontrar falhas comuns como XSS, caminhos expostos e senhas fracas — sem depender de soluções pesadas ou complicadas.
+**LYNX** is a fast, lightweight, and modular toolset for web vulnerability scanning and exploitation.
 
-## Por que esse projeto existe?
+Designed for security enthusiasts, students, and professionals, LYNX focuses on speed, clarity, and real control — helping you find real issues like XSS, exposed paths, misconfigurations, and weak credentials without the bloat.
 
-A ideia do LYNX surgiu da necessidade de ferramentas que fossem diretas ao ponto. A maioria dos scanners exigem configuração demais. O LYNX tenta resolver isso oferecendo um conjunto de utilitários simples, com foco em clareza e controle manual.
+---
 
-O projeto começou com funções básicas de XSS e scan de headers, mas é planejado para ser modular, permitindo a adição de novos modos de ataque com o tempo.
+## Current Capabilities
 
-## O que ele faz (por enquanto)?
+- **XSS Scanner**  
+  Scans for reflected and stored Cross-Site Scripting vulnerabilities across user inputs.
 
-- **XSS Scanner**
-  Detecta e testa possíveis pontos vulneráveis a Cross-Site Scripting (refletido e armazenado).
+- **Path Scanner**  
+  Bruteforces common directories and files to discover exposed resources on the target.
 
-- **Path Scanner**
-  Faz varredura de diretórios e arquivos comuns expostos no servidor.
+- **Smap (Site Mapping Tool)**  
+  Collects detailed site information from a single URL, including:
+  - HTTP Headers
+  - IP (v4 and v6)
+  - Cookies
+  - HTML Forms
+  - Internal & External Links
+  - Open Ports
+  - Backend technologies
 
-- **Scanner de informações (Smap)**
-  Pega informações de um site com uma URL, pegando headers, Cors, informações de cookies, portas, formulários, informações de backend 
-- **Smap**
-  Puxa dados completo de um site através da URL assim como:
-    - Headers
-    - IP (v4 e v6)
-    - Cookies
-    - Formularios
-    - Links
-    - Portas abertas
-    - Tecnologia do backend
+These modules are built using well-known techniques from manual and automated testing — ideal for learning, labs, and real-world reconnaissance.
 
-Essas funções são implementadas com base em técnicas clássicas usadas em testes manuais e automatizados, voltadas para aprendizado, labs e análises rápidas.
+---
 
-## Características
+## Features
 
-- **Menu interativo e feedback visual com progresso**
-- **Código modular, fácil de modificar e expandir**
+- **Interactive CLI** with clear visual progress feedback  
+- **Modular architecture**, easy to expand and customize  
+- Written in **Python and C** for balance between usability and raw speed  
+- Designed for **quick scans** or **deeper analysis**, depending on your workflow  
 
-## Quer ajudar?
+---
 
-Esse projeto ainda tá só começando e **toda ajuda é bem-vinda**.
-Se você manja de Python, C, segurança web, design de interface ou só quer contribuir com ideias, **chega junto!**
+## Contribute
 
-Pode abrir issues, mandar sugestões, corrigir bugs ou criar novos módulos.
-Tem um manual explicando como usar a ferramenta em [manual.md](docs/manual.md) — dá uma olhada lá antes de começar.
+LYNX is still growing, and **contributions are more than welcome**.  
+Whether you're into Python, C, web security, UX, or just have solid ideas — come join the mission.
 
-Bora fazer o LYNX crescer juntos!
+You can:
+- Report bugs  
+- Suggest features  
+- Build new modules  
+- Improve performance or UX
 
-## Importante
+A complete usage guide is available in [manual.md](docs/manual.md) — check it before diving in.
 
-O LYNX é um projeto **não oficial**, feito para **fins educacionais e testes autorizados**.
-**Não use em sistemas que você não tem permissão para testar.**
-O autor **não se responsabiliza por qualquer uso indevido.**
+Let’s build something powerful together.
 
-## Clonar este repositório
+---
+
+## Disclaimer
+
+LYNX is an **unofficial**, open-source tool built for **educational purposes and authorized testing only**.  
+**Do not use it on any systems without explicit permission.**  
+The author assumes **no responsibility for misuse or illegal activities**.
+
+---
+
+## Clone this repository
 
 ```bash
 git clone https://github.com/JuaanReis/Lynx.git
