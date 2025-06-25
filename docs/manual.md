@@ -1,81 +1,138 @@
-# Como Usar o LYNX - Web Security Suite 2025  
-  
-Este README é voltado para explicar como **utilizar o LYNX**, uma ferramenta de exploração de vulnerabilidades web.  
-  
-## Pré-requisitos  
-  
-1. **Python 3.x** instalado.  
-2. **Dependências**:  
-   - Se necessário, instale as dependências com o comando:  
-     ```bash  
-     pip install -r requirements.txt  
-     ```  
-  
-## Estrutura do Projeto  
-  
-A ferramenta contém scripts principais e um **bash** na pasta raiz, que serve para gerenciar os diferentes módulos da ferramenta.  
-Os módulos atuais incluem:  
-  
-- **XSS Scanner**  
-- **Path Scanner**  
-- **Smap: scanner de informações**  
-  
-## Usando o menu interativo  
-  
-No diretório raiz do projeto, existe um arquivo bash chamado `lynx.sh` que facilita a execução de qualquer módulo. Para ver as opções de uso e as flags de cada módulo, basta rodar o seguinte comando:  
-  
-```bash  
-./lynx  
-```  
-  
-E depois roda:  
-  
-```  
---help  
-```  
-  
-ou:  
-  
-```  
--h  
-```  
-  
-## Usando pela linha de comando direta  
-Rodando pela raiz coloque  
-```  
-python3 dev.py (--Nome do modulo) (Comando para a ferramenta escolhido)  
-```  
-**Ex: python3 dev.py --path -u www.exemple.com -w path.txt -l5000 -t60 -s 200 300 301 -d 0.2 0.4 -m debug**  
-  
-## Usos na pratica  
-  - XSS  
-    - Configurações gerais  
-      - (-T ou --type) tipo de ataque sendo armazenado ou refletido (Ex: -Tr tipo refletido ou -Ta para tipo armazenado)  
-      - (-l ou --limit) limite de payloads que a ferramenta vai usar (Ex: -l1000 ou --limit1000)  
-      - (-t ou --thread) quantidade de thread usado para o uso do ataque (Ex: -t30 ou --thread30)  
-      - (-d ou --debug) acionado para mais informações do ataque assim como quais payloads foram refletidos e em qual parametro (não requerido)  
-  
-      - XSS refletido  
-        - (-u ou --url) Alvo do ataque (Ex: -u www.example.com/login?uid=10 ou --url www.exemple.com/login?uid=10) a url deve ter um parametro como visto acima (uid)  
-  
-      - XSS armazenado  
-        - (-p ou --post) url na qual o payload será testado (Ex: -p www.example.com ou --post www.example.com)  
-        - (-v ou --view) url na qual o payload sera visível (Ex: -v www.example2.com ou --view www.example2.com)  
-  
-    **Ex: -Tr -u www.exemple.com -l200 -t20 --debug**  
-  
-  - Path  
-    - (-u ou --url) url alvo do ataque (Ex: -u www.example.com ou --url www.example.com)  
-    - (-w ou --wordlist) arquivo de payloads usados para o ataque (Ex: -w path.txt ou --wordlist path.txt  default=path.txt)  
-    - (-l) numero de payloads usados (Ex: -l 5000) max=5000 default=5000  
-    - (-t) numero de threads (Ex: -t20) default=10  
-    - (-s ou --status) numero status code que retorna true (Ex: -s 200 ou --status 200) default=200  
-    - (-d ou --delay) delay entre requisições (-d 0.3 0.5 ou --delay 0.3 0.5) defult=0.3 0.5  
-    - (-m ou --mode) modo de output (Ex: -m normal ou --mode normal) default=normal, option=[normal, debug]  
-  
-    **Ex: -u www.exemple.com -w path.txt -l5000 -t60 -s 200 300 301 -d 0.2 0.4 -m debug**  
-  
-  -Smap  
-    - (-u ou --url) alvo do ataque (-u www.example ou --url www.example.com)  
-    *Só isso, facil assim*  
-    **--url www.exemple.com**
+## How to Use LYNX - Web Security Suite 2025
+
+This README explains how to use LYNX, a powerful web vulnerability exploitation tool.
+
+
+---
+
+## 🔧 Requirements
+
+Requirement	Details
+
+Python	Version 3.x or higher
+Dependencies	Install using the command below if needed:
+
+
+pip install -r requirements.txt
+
+
+---
+
+## 📁 Project Structure
+
+The project contains main scripts and a bash launcher located in the root directory, which helps manage the tool’s modules.
+
+Current Modules
+
+Module Name	Description
+
+XSS Scanner	Tests for reflected and stored XSS
+Path Scanner	Brute-forces directories and endpoints
+Smap	Collects basic information about a target
+
+
+
+---
+
+🧭 Using the Interactive Menu
+
+In the root directory, there's a bash file called lynx.sh that makes it easier to run any module.
+
+Run:
+
+./lynx
+
+Then see available options:
+
+--help
+
+or
+
+-h
+
+
+---
+
+## 🖥️ Using Direct Command Line
+
+You can also run the modules directly via:
+
+python3 dev.py (--ModuleName) (Chosen tool command)
+
+Example:
+
+python3 dev.py --path -u www.example.com -w path.txt -l5000 -t60 -s 200 300 301 -d 0.2 0.4 -m debug
+
+
+---
+
+## ⚔️ Practical Usage
+
+XSS Scanner
+
+Option	Description
+
+-T, --type	Type of XSS: -Tr for reflected, -Ta for stored
+-l, --limit	Limit of payloads used (e.g. -l1000)
+-t, --thread	Number of threads (e.g. -t30)
+-d, --debug	Enables verbose mode (not required)
+
+
+Reflected XSS
+
+Option	Description
+
+-u, --url	Target URL with parameter (e.g. -u www.example.com/login?uid=10)
+
+
+Stored XSS
+
+Option	Description
+
+-p, --post	Target POST URL (e.g. -p www.example.com)
+-v, --view	URL to view the injected payload (e.g. -v www.example2.com)
+
+
+Example:
+
+-Tr -u www.example.com -l200 -t20 --debug
+
+
+---
+
+Path Scanner
+
+Option	Description
+
+-u, --url	Target URL (e.g. -u www.example.com)
+-w, --wordlist	Path wordlist file (default = path.txt)
+-l	Number of payloads (max/default = 5000)
+-t	Number of threads (default = 10)
+-s, --status	Status codes that count as success (e.g. -s 200 301 302)
+-d, --delay	Delay range between requests (e.g. -d 0.3 0.5)
+-m, --mode	Output mode (normal or debug, default = normal)
+
+
+Example:
+
+-u www.example.com -w path.txt -l5000 -t60 -s 200 300 301 -d 0.2 0.4 -m debug
+
+
+---
+
+Smap
+
+Option	Description
+
+-u, --url	Target URL (e.g. -u www.example.com)
+
+
+Example:
+
+--url www.example.com
+
+Simple as that.
+
+
+---
+
