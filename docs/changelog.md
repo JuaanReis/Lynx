@@ -1,63 +1,106 @@
-***LYNX - v1.0.2***
 
-## Atualização
+#  LYNX - v1.0.2 Changelog
 
-  - Novidades
-    - Adição de proxy Tor
-    - Header para disfarçar requisições
-    - Novos payloads
-    - Modo de execução (dev)
-    - Bloqueio de hosts sensiveis
+##  Update Highlights
 
-  - Remoções
-    - Remoção de proxy do scanner de paths
-    - Informações do sistema no menu
-    - Pasta de IA
+###  New Features
 
-  - Correções
-    - Modularização da ferramenta de XSS
-    - Verificação de resposta do scanner de PATHS
-    - Correção de verificação de portas do SMAP
-    - Logs com extenção log
+| Feature                     | Description                                  |
+|-----------------------------|----------------------------------------------|
+| **Tor Proxy Support**       | Added proxy integration using Tor            |
+| **Header Spoofing**         | Custom headers to disguise requests          |
+| **New Payloads**            | Expanded attack vectors                      |
+| **Dev Mode**                | Easier debugging and module development      |
+| **Sensitive Host Blocking**| Prevents scanning on blacklisted targets     |
 
-  - Em breve
-    - Novos modulos (RCE, SQLi, Command injection)
-    - Melhoria da UX e UI
-    - Modulos em C
-    - Modo DEV para facilitar a adição de novos modulos
-    - Melhoria da estabilidade di LYNX
-    - Reports em JSON
-    - Integração de IA
+---
 
-# SMAP
+### Removed
 
-  - Informações gerais do site
-    - Headers, Cookies, CORS
-    - Tecnologias do backend
-    - Titulo, dominio
-    - Verificação do certificado SSL
-    - Portas
-    - Formularios (tipos, valores, metodos)
-    - Links (Internos e externos)
-    - Checkagem de parametro
+| Removed Component           | Reason |
+|-----------------------------|--------|
+| Proxy from Path Scanner     | Reworked for better compatibility |
+| System Info from Menu       | Cleaned up interface |
+| AI Folder                   | Restructured for future integration |
 
-# XSS
+---
 
-  - Injeção de script em parametro
+### Fixes & Improvements
 
-    - XSS refletido
-      - Resultado local
-      - Feito somente na pagina
-      - Feito em parametros
-      - Requisição com metodo GET
-      - Verifica se o resultado esta em contexto perigoso
+| Fix/Improvement                     | Description |
+|-------------------------------------|-------------|
+| XSS Tool Modularization             | Separated into modules for better maintenance |
+| PATH Scanner Response Check         | Fixed logic for detecting real paths |
+| SMAP Port Scan Fix                  | Corrected issue in port checking      |
+| Log Files with `.log` Extension     | Standardized log file outputs         |
 
-    - XSS armazenado
-      - Resultado no servidor
-      - Feito em formularios com metodo POST
+---
 
-# PATHS
+## Coming Soon
 
-  - Verificação de caminhos em uma URL
-    - Injeta uma nova PATH na URL e verifica o resultado
-    - Evita falsos positivos verificando o HTML
+###  New Modules
+
+- Remote Code Execution (RCE)
+- SQL Injection (SQLi)
+- Command Injection
+
+### UX & UI Improvements
+
+- Better user experience across modules
+- More intuitive CLI feedback
+
+### System Enhancements
+
+- Rewritten modules in **C** for performance
+- DEV mode for adding new modules easily
+- More stable and reliable core
+- JSON Report generation
+- AI integration
+
+---
+
+## Module Overviews
+
+### SMAP (Site Mapper)
+
+| Feature                     | Description |
+|-----------------------------|-------------|
+| General Info                | Site title, domain, and SSL check |
+| Headers & Cookies           | CORS, custom headers, cookie data |
+| Backend Technologies        | Attempts tech fingerprinting |
+| Port Scanning               | Basic open port detection |
+| Forms                       | Detects method, fields, values |
+| Links                       | Internal and external link extraction |
+| Parameter Check             | Detects URL parameters |
+
+---
+
+### XSS
+
+#### Reflected XSS
+
+| Feature                     | Description |
+|-----------------------------|-------------|
+| Local Result                | Executed only in the response |
+| Parameter Based             | Looks for vulnerable parameters |
+| GET Method                  | Supports GET requests |
+| Dangerous Context Detection | Checks if payload is in a critical context |
+
+#### Stored XSS
+
+| Feature                     | Description |
+|-----------------------------|-------------|
+| Server-Side Persistence     | Payload stored on the server |
+| POST Method                 | Injects via form submissions |
+
+---
+
+### PATH Scanner
+
+| Feature                     | Description |
+|-----------------------------|-------------|
+| Path Injection              | Injects paths into target URLs |
+| False Positive Avoidance    | Analyzes HTML to filter invalid results |
+
+---
+
